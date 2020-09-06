@@ -86,14 +86,37 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./assset/css/common.scss":
+/*!********************************!*\
+  !*** ./assset/css/common.scss ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./assset/css/common.scss?");
+
+/***/ }),
+
+/***/ "./assset/css/init.css":
+/*!*****************************!*\
+  !*** ./assset/css/init.css ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./assset/css/init.css?");
+
+/***/ }),
+
 /***/ "./src/main.js":
 /*!*********************!*\
   !*** ./src/main.js ***!
   \*********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("console.log('clear')\n\n//# sourceURL=webpack:///./src/main.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _assset_css_common_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../assset/css/common.scss */ \"./assset/css/common.scss\");\n/* harmony import */ var _assset_css_common_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_assset_css_common_scss__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _assset_css_init_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../assset/css/init.css */ \"./assset/css/init.css\");\n/* harmony import */ var _assset_css_init_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_assset_css_init_css__WEBPACK_IMPORTED_MODULE_1__);\n\r\n\r\nconsole.log('clear')\n\n//# sourceURL=webpack:///./src/main.js?");
 
 /***/ })
 

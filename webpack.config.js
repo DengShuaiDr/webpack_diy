@@ -6,6 +6,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const {
   CleanWebpackPlugin
 } = require('clean-webpack-plugin')
+// 拆分CSS
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
 module.exports = {
   // 模式
@@ -19,6 +21,33 @@ module.exports = {
   output: {
     filename: '[name].[hash:8].js', // 实际开发中一般会给打包后的文件加上hash后缀
     path: path.resolve(__dirname, './dist')
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          {
+            loader:'postcss-loader',
+            options: {
+              plugins: [require('autoprefixer')]
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              implementation: require('sass')
+            }
+          }
+        ]
+      }
+    ]
   },
   plugins: [
     new CleanWebpackPlugin(), // 删除上次打包的文件
@@ -34,6 +63,11 @@ module.exports = {
       template: path.resolve(__dirname, './public/index.html'),
       filename: 'header.html',
       chunks: ['header']
+    }),
+    // 拆分CSS
+    new MiniCssExtractPlugin({
+      fileName: '[name].[hash].css',
+      chunkFilename: '[id].css'
     })
   ]
 }
