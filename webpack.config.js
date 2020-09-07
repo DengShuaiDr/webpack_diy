@@ -26,7 +26,10 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader'
+        ]
       },
       {
         test: /\.scss$/,
@@ -43,6 +46,23 @@ module.exports = {
             loader: 'sass-loader',
             options: {
               implementation: require('sass')
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(png|jpe?g)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10240,
+              fallback: {
+                loader: 'file-loader',
+                options: {
+                  name: 'images/[name].[hash:8].[ext]'
+                }
+              }
             }
           }
         ]
@@ -66,8 +86,8 @@ module.exports = {
     }),
     // 拆分CSS
     new MiniCssExtractPlugin({
-      fileName: '[name].[hash].css',
-      chunkFilename: '[id].css'
+      filename: 'css/[name].[hash:8].css',
+      chunkFilename: 'css/[id].css'
     })
   ]
 }

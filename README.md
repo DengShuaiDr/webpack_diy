@@ -30,7 +30,7 @@ module.exports = {
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  ...
+  // 省略其他配置...
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './public/index.html')
@@ -41,7 +41,7 @@ module.exports = {
 3. `clean-webpack-plugin`每次打包前删除上次打包的文件
 ```
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-...
+// 省略其他配置...
 plugins: [
   new CleanWebpackPlugin()
 ]
@@ -85,7 +85,7 @@ module.exports = {
 ```
 module: {
   rules: [
-    ...
+    // 省略其他配置...
     {
       test: '/\.scss/',
       use: [
@@ -107,7 +107,7 @@ module: {
 ```
 module: {
   rules: [
-    ...
+    // 省略其他配置...
     {
       test: '/\.scss/',
       use: [
@@ -136,7 +136,7 @@ module: {
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 module: {
   rules: [
-    ...
+    // 省略其他配置...
     {
       test: '/\.scss/',
       use: [
@@ -161,3 +161,31 @@ module: {
 ```
 > 此做法会将所有CSS合并为同一个文件,每个入口对应一个CSS文件,实际开发中,往往需要差分多个CSS
 7. `npm i -D extract-text-webpack-plugin@next`差分多个CSS
+8. 其他类型文件的打包,`url-loader`与`file-loader`配合使用;`file-loader`在对文件进行处理后,会将文件移动到输出目录;配合`url-loader`使用,
+在限制文件大小后,会输出base64编码,否则处理方式同使用`file-loader`
+```
+module: {
+  rules: [
+    // 省略其他配置...
+    // 只简单写了下关于部分图片的打包配置;文件,字体等资源的打包只是test匹配不同
+    {
+      test: /\.(png|jpe?g)$/i,
+      use: [
+        {
+          loader: 'url-loader',
+          options: {
+            limit: 10240,
+            fallback: {
+              loader: 'file-loader',
+              options: {
+                name: 'images/[name].[hash:8].[ext]'
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+
+```
