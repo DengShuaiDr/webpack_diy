@@ -161,8 +161,9 @@ module: {
 ```
 > 此做法会将所有CSS合并为同一个文件,每个入口对应一个CSS文件,实际开发中,往往需要差分多个CSS
 7. `npm i -D extract-text-webpack-plugin@next`差分多个CSS
-8. 其他类型文件的打包,`url-loader`与`file-loader`配合使用;`file-loader`在对文件进行处理后,会将文件移动到输出目录;配合`url-loader`使用,
-在限制文件大小后,会输出base64编码,否则处理方式同使用`file-loader`
+8. 其他类型文件的打包,`url-loader`与`file-loader`配合使用;`file-loader`在对文件进行处理后,会将文件移动到输出目录;配合`url-loader`使用,在限制文件大小后,会输出base64编码,否则处理方式同使用`file-loader`
+> npm install --save-dev url-loader
+> npm install --save-dev file-loader
 ```
 module: {
   rules: [
@@ -188,4 +189,31 @@ module: {
   ]
 }
 
+```
+9. 用babel转义js文件
+为了使我们的js代码兼容更多的环境,我们经常会借用`babel-loader`把ES6/7/8语法转换为ES5语法;然而,一些新的API,例如promise、Generator、Set、Maps、Proxy等,`babel-loader`也不会对其进行转义,我们还需借助`babel-polyfill`来实现
+> npm i babel-loader @babel/preset-env @babel/core
+> npm i @babel/polyfill
+```
+// babel-loader
+module: {
+  // 省略其他配置...
+  rules: [
+    {
+      test: /\.js$/,
+      use: {
+        loader: 'babel-loader',
+        options:{
+          presets:['@babel/preset-env']
+        }
+      },
+      exclude: '/node_modules/'
+    }
+  ]
+}
+// babel-polyfill
+entry: {
+  main: ['@babel/polyfill', path.resolve(__dirname,'./src/main.js')],
+  header: ['@babel/polyfill', path.resolve(__dirname,'./src/main.js')],
+}
 ```

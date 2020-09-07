@@ -12,11 +12,12 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 module.exports = {
   // 模式
   mode: 'development',
-  // 入口文件路径
+  // 入口文件路径 
   entry: {
-    main: path.resolve(__dirname, './src/main.js'),
-    header: path.resolve(__dirname, './src/main.js'),
-  }, // __dirname 变量 是以文件所处的路径为值
+    main: ['@babel/polyfill', path.resolve(__dirname,'./src/main.js')],
+    header: ['@babel/polyfill', path.resolve(__dirname,'./src/main.js')],
+  },
+  // __dirname 变量 是以文件所处的路径为值
   // 打包输出路径
   output: {
     filename: '[name].[hash:8].js', // 实际开发中一般会给打包后的文件加上hash后缀
@@ -24,6 +25,18 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options:{
+              presets:['@babel/preset-env']
+            }
+          }
+        ],
+        exclude: '/node_modules/'
+      },
       {
         test: /\.css$/,
         use: [
